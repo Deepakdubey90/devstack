@@ -170,6 +170,12 @@ studio-attach: ## Attach to the Studio container process to use the debugger & s
 studio-restart: ## Kill the LMS Django development server. The watcher process will restart it.
 	docker exec -t edx.devstack.studio bash -c 'kill $$(ps aux | grep "manage.py cms" | egrep -v "while|grep" | awk "{print \$$2}")'
 
+xqueue-shell: ## Run a shell on the XQueue container
+	docker exec -it edx.devstack.xqueue env TERM=$(TERM) /bin/bash
+
+rabbit-shell: ## Run a shell on the RabbitMQ container
+	docker exec -it edx.devstack.rabbit env TERM=$(TERM) /bin/bash
+
 %-static: ## Rebuild static assets for the specified service container
 	docker exec -t edx.devstack.$* bash -c 'source /edx/app/$*/$*_env && cd /edx/app/$*/$*/ && make static'
 
